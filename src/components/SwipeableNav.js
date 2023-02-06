@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Nav from "./Nav";
 
-const drawerBleeding = 35;
+const drawerBleeding = 25;
 
 const Root = styled('div')(({ theme }) => ({
     height: '100%',
