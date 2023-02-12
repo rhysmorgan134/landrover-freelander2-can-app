@@ -1,7 +1,9 @@
+const MediumSpeed = require("./messageHandler/MediumSpeed");
 
 
 module.exports = function (window, dev, mp4Reader) {
     const {Server} = require("socket.io");
+
     const MediumSpeed = require('./messageHandler/MediumSpeed')
     const io = new Server(3001, {
         maxHttpBufferSize: 1e8,
@@ -14,6 +16,15 @@ module.exports = function (window, dev, mp4Reader) {
     });
 
     const mediumSpeed = new MediumSpeed(io)
+    try {
+        const can = require('socketcan');
+        const channel = can.createRawChannel("can0", true);
+        channel.addListener("onMessage", function ({data, id}) {
+            MediumSpeed.parseMessage(data, id);
+        });
+    } catch {
+        console.log("couldnt set up canbus")
+    }
 
     io.on("connection", (socket) => {
         console.log("connection in server!!!!!")
