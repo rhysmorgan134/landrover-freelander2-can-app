@@ -22,6 +22,7 @@ module.exports = function (window, dev, mp4Reader) {
         channel.addListener("onMessage", function ({data, id}) {
             MediumSpeed.parseMessage(data, id);
         });
+        channel.start()
     } catch {
         console.log("couldnt set up canbus")
     }
