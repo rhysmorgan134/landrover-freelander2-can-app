@@ -43,7 +43,8 @@ function SwipeableNav(props) {
     const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
-        <Root onClick={() => setOpen(true)}>
+        // <Root onClick={() => setOpen(true)}>
+        <Root>
             <CssBaseline />
             <Global
                 styles={{

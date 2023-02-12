@@ -16,16 +16,13 @@ module.exports = function (window, dev, mp4Reader) {
     });
 
     const mediumSpeed = new MediumSpeed(io)
-    try {
-        const can = require('socketcan');
-        const channel = can.createRawChannel("can0", true);
-        channel.addListener("onMessage", function ({data, id}) {
-            MediumSpeed.parseMessage(data, id);
-        });
-        channel.start()
-    } catch {
-        console.log("couldnt set up canbus")
-    }
+    const can = require('socketcan');
+    const channel = can.createRawChannel("can0", true);
+    channel.addListener("onMessage", function ({data, id}) {
+        MediumSpeed.parseMessage(data, id);
+    });
+    channel.start()
+
 
     io.on("connection", (socket) => {
         console.log("connection in server!!!!!")
