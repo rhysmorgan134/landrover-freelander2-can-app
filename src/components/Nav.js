@@ -18,6 +18,7 @@ export default function({setView}) {
                 <BottomNavigationAction label="Carplay" icon={<RestoreIcon />} onClick={() => setView('Carplay')}/>
                 <BottomNavigationAction label="Vehicle" icon={<FavoriteIcon />} onClick={() => setView('Vehicle')}/>
                 <BottomNavigationAction label="Settings" icon={<ArchiveIcon />} onClick={() => setView('Settings')}/>
+                <BottomNavigationAction label="Dev" icon={<ArchiveIcon />} onClick={() => setView('Dev')}/>
             </BottomNavigation>
         </Paper>
     )

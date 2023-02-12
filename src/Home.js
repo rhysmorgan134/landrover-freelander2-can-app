@@ -2,14 +2,28 @@ import logo from './logo.svg';
 import React, {useState, useEffect} from 'react'
 import Nav from './components/Nav'
 import SwipeableNav from './components/SwipeableNav'
-import {Container} from "@mui/material";
+import {Container, Modal} from "@mui/material";
 import { io } from "socket.io-client";
 import {Carplay} from  "react-js-carplay";
 import Vehicle from "./components/Vehicle";
 import Settings from "./components/Settings";
+import Dev from './components/Dev'
 import {Box} from "@mui/material";
-// const socket = io("ws://localhost:3001");
+import ParkingSensors from "./components/pam/ParkingSensors";
+import Camera from "./components/Camera/Camera";
+const socket = io("localhost:3001");
 const {ipcRenderer} = window;
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    height: '95%',
+    width: '95%',
+    boxShadow: 24,
+    display: "flex"
+};
 
 function Home() {
     const [value, setValue] = React.useState(0);
@@ -17,27 +31,36 @@ function Home() {
     // const [socketConnected, setSocketConnected] = React.useState(socket.connected)
     const [time, setTime] = React.useState({minutes: 0, seconds: 0})
     const [settings, setSettings] = React.useState({})
+    const [manualClose, setManualClose] = React.useState(false)
+    const [parkingSensors, setParkingSensors] = React.useState({parkingActive: false,
+        frontLeft: 0,
+        frontLeftMiddle: 0,
+        frontRightMiddle: 0,
+        frontRight:0,
+        rearLeft: 0,
+        rearLeftMiddle: 0,
+        rearRightMiddle: 0,})
     const [fps, setFps] = React.useState(null)
 
 
     useEffect(() => {
         let fpsTemp = ipcRenderer.sendSync('fpsReq')
+
         setFps(fpsTemp)
-        // socket.on('connect', () => {
-        //     setSocketConnected(true);
-        // });
-        //
-        // socket.on('disconnect', () => {
-        //     setSocketConnected(false);
-        // });
-        //
-        // socket.on('time', (data) => {
-        //     setTime(prevState => ({...prevState, ...data}))
-        // })
+        socket.on('connect_error', err => console.log("err"))
+        socket.on('error', err => console.log(err))
+        socket.on('connect', () => console.log("connected"))
+        socket.on('parkingSensors', (data) => {
+            setParkingSensors(data)
+            if(data.parkingActive === false && manualClose===true) {
+                setManualClose(false)
+            }
+        })
         return () => {
-            // socket.off('connect');
+            socket.off('connect');
             // socket.off('disconnect');
             // socket.off('time')
+            socket.off('connect_error')
         };
     }, [])
 
@@ -57,6 +80,8 @@ function Home() {
                 return <Vehicle key={'vehicle'}/>
             case 'Settings':
                 return <Settings key={'settings'}/>
+            case 'Dev':
+                return <Dev key={'dev'}  socket={socket}/>
             default:
                 return <Vehicle />
         }
@@ -67,6 +92,26 @@ function Home() {
             <Container maxWidth={false} disableGutters sx={{height: '100%', maxHeight: '100%', overflow: 'hidden'}}>
                 {renderView()}
                 {view === "Carplay" ? <SwipeableNav setView={setView}/> : <Nav setView={setView}/>}
+                <Modal
+                    open={parkingSensors.parkingActive > 0 && manualClose===false}
+                    onClick={()=> setManualClose(true)}
+                >
+                    <Box sx={style}>
+                        <Camera />
+                        <Box sx={{display: 'flex', alightItems: 'center', justifyContent: 'center', flexDirection: 'column'}}>
+                            <ParkingSensors
+                                sensorFLL={parkingSensors.frontLeft}
+                                sensorFCL={parkingSensors.frontLeftMiddle}
+                                sensorFCR={parkingSensors.frontRightMiddle}
+                                sensorFRR={parkingSensors.frontRight}
+                                sensorBLL={parkingSensors.rearLeft}
+                                sensorBCL={parkingSensors.rearLeftMiddle}
+                                sensorBCR={parkingSensors.rearRightMiddle}
+                                sensorBRR={parkingSensors.rearRight}/>
+                        </Box>
+
+                    </Box>
+                </Modal>
             </Container>
     );
 }

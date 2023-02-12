@@ -9,7 +9,7 @@ const Settings = require('./SettingsStore')
 const path = require('path'),
     isDev = require('electron-is-dev');
 
-// require('./server')()
+require('./server')()
 
 let mainWindow;
 
