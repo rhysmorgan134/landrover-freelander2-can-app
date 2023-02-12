@@ -2,9 +2,10 @@ const electron = require('electron'),
     app = electron.app,
     BrowserWindow = electron.BrowserWindow,
     ipcMain = electron.ipcMain
-
-const Carplay = require('node-carplay')
+const {Worker} = require('worker_threads')
+// const {carplayWorker} = require('./node-CarPlay/index')
 const Settings = require('./SettingsStore')
+
 
 const path = require('path'),
     isDev = require('electron-is-dev');
@@ -42,7 +43,7 @@ const createWindow = () => {
         fps: settings.store.get('fps'),
     }
 
-    let carplay = new Carplay(config)
+    let carplay = new Worker('./public/node-CarPlay/modules/carplayWorker.js', {workerData: config})
 
     ipcMain.on("fpsReq", (event) => {
         console.log("fps req")

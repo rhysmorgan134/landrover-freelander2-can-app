@@ -4,7 +4,7 @@ import Nav from './components/Nav'
 import SwipeableNav from './components/SwipeableNav'
 import {Container, Modal} from "@mui/material";
 import { io } from "socket.io-client";
-import {Carplay} from  "react-js-carplay";
+import {Carplay} from  "./react-js-carplay/src/index";
 import Vehicle from "./components/Vehicle";
 import Settings from "./components/Settings";
 import Dev from './components/Dev'
@@ -75,7 +75,7 @@ function Home() {
     const renderView = () => {
         switch(view) {
             case 'Carplay':
-                return fps != null ? <Carplay settings={{fps: fps}} status={true} touchEvent={touchEvent} openModal={false} openModalReq={dummy} closeModalReq={dummy} type={"ws"}/> : <div></div>
+                return fps != null ? <Carplay settings={{fps: fps}} status={true} openModal={false} openModalReq={dummy} closeModalReq={dummy} type={"ws"}/> : <div></div>
             case 'Vehicle':
                 return <Vehicle key={'vehicle'}/>
             case 'Settings':

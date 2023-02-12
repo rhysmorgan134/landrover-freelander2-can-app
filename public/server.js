@@ -3,7 +3,7 @@ const MediumSpeed = require("./messageHandler/MediumSpeed");
 
 module.exports = function (window, dev, mp4Reader) {
     const {Server} = require("socket.io");
-
+    const blocked = require('blocked')
     const MediumSpeed = require('./messageHandler/MediumSpeed')
     const io = new Server(3001, {
         maxHttpBufferSize: 1e8,
@@ -14,14 +14,22 @@ module.exports = function (window, dev, mp4Reader) {
             credentials: true
         }
     });
+    blocked(ms => {
+        console.log("EVENT Loop Blocked")
+    })
 
     const mediumSpeed = new MediumSpeed(io)
-    const can = require('socketcan');
-    const channel = can.createRawChannel("can0", true);
-    channel.addListener("onMessage", function ({data, id}) {
-        MediumSpeed.parseMessage(data, id);
-    });
-    channel.start()
+    try {
+        const can = require('socketcan');
+        const channel = can.createRawChannel("can0", true);
+        channel.addListener("onMessage", function ({data, id}) {
+            mediumSpeed.parseMessage(data, id);
+        });
+        channel.start()
+    } catch {
+        console.log("couldnt set up socket can")
+    }
+
 
 
     io.on("connection", (socket) => {
