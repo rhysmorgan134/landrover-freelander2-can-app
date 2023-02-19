@@ -1,5 +1,5 @@
 import React from 'react';
-import DataBox from "../common/DataBox";
+import DataBox from "../Common/DataBox";
 import {Grid} from "@mui/material";
 
 

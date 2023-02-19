@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { useDispatch, useSelector} from "react-redux";
 import {Grid, Box} from "@mui/material";
-import checkPage from "../../utils";
-import DataBoxSingleLine from "../common/DataBoxSingleLine";
+import DataBoxSingleLine from "../Common/DataBoxSingleLine";
 import SwipeableViews from 'react-swipeable-views-react-18-fix';
 import EngineInfo from "./EngineInfo";
 
