@@ -23,8 +23,8 @@ class ParkingSensors extends Message {
             let tempData = message.readUint32BE(1)
             tempData = ((tempData << 12) >>> 12)
             let mask = 31
-            this._data.rearLeft = tempData & mask
-            this._data.rearRight = (tempData >>> 15) & mask
+            this._data.rearRight = tempData & mask
+            this._data.rearLeft = (tempData >>> 15) & mask
             this._data.rearLeftMiddle = (tempData >>> 5) & mask
             this._data.rearRightMiddle = (tempData >>> 10) & mask
             tempData = message.readUint32BE(4)
