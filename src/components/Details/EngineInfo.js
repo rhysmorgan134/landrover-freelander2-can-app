@@ -3,7 +3,7 @@ import DataBox from "../Common/DataBox";
 import {Grid} from "@mui/material";
 
 
-function VehicleInfo({details}) {
+function EngineInfo({details}) {
 
     return (
         <Grid container justify={'center'} alignItems={'center'} alignContent={'center'} spacing={3}>
@@ -23,4 +23,4 @@ function VehicleInfo({details}) {
     )
 }
 
-export default VehicleInfo
+export default EngineInfo
