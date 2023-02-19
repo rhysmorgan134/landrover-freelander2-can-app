@@ -3,6 +3,7 @@ import {BottomNavigation, BottomNavigationAction, Paper} from "@mui/material";
 import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ArchiveIcon from "@mui/icons-material/Archive";
+import {QueryStats} from "@mui/icons-material";
 
 export default function({setView}) {
     const [value, setValue] = useState(false)
@@ -16,7 +17,7 @@ export default function({setView}) {
                 }}
             >
                 <BottomNavigationAction label="Carplay" icon={<RestoreIcon />} onClick={() => setView('Carplay')}/>
-                <BottomNavigationAction label="Vehicle" icon={<FavoriteIcon />} onClick={() => setView('Vehicle')}/>
+                <BottomNavigationAction label="Vehicle" icon={<QueryStats />} onClick={() => setView('Vehicle')}/>
                 <BottomNavigationAction label="Settings" icon={<ArchiveIcon />} onClick={() => setView('Settings')}/>
                 <BottomNavigationAction label="Dev" icon={<ArchiveIcon />} onClick={() => setView('Dev')}/>
             </BottomNavigation>
