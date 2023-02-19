@@ -11,7 +11,7 @@ import Dev from './components/Dev'
 import {Box} from "@mui/material";
 import ParkingSensors from "./components/pam/ParkingSensors";
 import Camera from "./components/Camera/Camera";
-const socket = io("localhost:3001");
+const socket = io("http://localhost:3001");
 const {ipcRenderer} = window;
 
 const style = {
