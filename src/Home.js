@@ -4,7 +4,7 @@ import Nav from './components/Nav'
 import SwipeableNav from './components/SwipeableNav'
 import {Container, Modal} from "@mui/material";
 import { io } from "socket.io-client";
-import {Carplay} from  "./react-js-carplay/src/index";
+import {Carplay} from  "react-js-carplay";
 import Vehicle from "./components/Vehicle";
 import Settings from "./components/Settings";
 import Dev from './components/Dev'
