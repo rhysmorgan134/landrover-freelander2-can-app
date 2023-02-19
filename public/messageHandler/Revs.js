@@ -11,9 +11,9 @@ class Revs extends Message {
     }
 
     parseMessage = (message) => {
-        console.log(message)
+        //console.log(message)
         this._data.revs = (message.readUint16BE(3) &~ 57344)
-        console.log(this._data.revs)
+        //console.log(this._data.revs)
 
         this._compare()
     };

@@ -1,8 +1,8 @@
 const electron = require('electron'),
     app = electron.app,
     BrowserWindow = electron.BrowserWindow,
-    ipcMain = electron.ipcMain
-const {Worker} = require('worker_threads')
+    ipcMain = electron.ipcMain,
+    globalShortcut = electron.globalShortcut
 // const {carplayWorker} = require('./node-CarPlay/index')
 const Settings = require('./SettingsStore')
 const Carplay = require('node-carplay')
@@ -24,6 +24,12 @@ const createWindow = () => {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: false
         }})
+
+    globalShortcut.register('f5', function () {
+        console.log('f5 is pressed')
+        mainWindow.webContents.openDevTools()
+    })
+
     const appUrl = isDev ? 'http://localhost:3000' :
         `file://${path.join(__dirname, '../build/index.html')}`
     mainWindow.loadURL(appUrl)

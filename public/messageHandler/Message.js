@@ -20,7 +20,7 @@ class Message extends EventEmitter {
 
     _compare() {
         if(!(_.isMatch(this._data, this._prevData))) {
-            console.log("data changed", this._data)
+            //console.log("data changed", this._data)
             this.emit('data', {name: this.name, data: this._data})
         }
         this._prevData = _.cloneDeep(this.data)
