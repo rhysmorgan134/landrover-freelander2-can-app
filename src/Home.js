@@ -83,7 +83,7 @@ function Home() {
             case 'Dev':
                 return <Dev key={'dev'}  socket={socket}/>
             default:
-                return <Vehicle />
+                return <VehicleInfo />
         }
     }
 
