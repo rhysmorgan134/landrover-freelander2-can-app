@@ -20,6 +20,7 @@ const createWindow = () => {
         width: 800,
         height: 480,
         frame: false,
+        kiosk : isDev ? false : true,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: false
@@ -34,7 +35,7 @@ const createWindow = () => {
         `file://${path.join(__dirname, '../build/index.html')}`
     mainWindow.loadURL(appUrl)
     mainWindow.on('closed', () => mainWindow = null)
-    mainWindow.webContents.openDevTools({mode: 'detach'})
+    // mainWindow.webContents.openDevTools({mode: 'detach'})
 
     let size = mainWindow.getSize()
 
