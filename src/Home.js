@@ -5,7 +5,7 @@ import SwipeableNav from './components/SwipeableNav'
 import {Container, Modal} from "@mui/material";
 import { io } from "socket.io-client";
 import {Carplay} from  "react-js-carplay";
-import Vehicle from "./components/Vehicle";
+import VehicleInfo from "./components/Details/VehicleInfo";
 import Settings from "./components/Settings";
 import Dev from './components/Dev'
 import {Box} from "@mui/material";
@@ -77,7 +77,7 @@ function Home() {
             case 'Carplay':
                 return fps != null ? <Carplay settings={{fps: fps}} status={true} openModal={false} openModalReq={dummy} closeModalReq={dummy} type={"ws"}/> : <div></div>
             case 'Vehicle':
-                return <Vehicle key={'vehicle'}/>
+                return <VehicleInfo key={'vehicle'} socket={socket}/>
             case 'Settings':
                 return <Settings key={'settings'}/>
             case 'Dev':
